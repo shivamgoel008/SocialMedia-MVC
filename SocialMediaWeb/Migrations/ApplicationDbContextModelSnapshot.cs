@@ -33,6 +33,10 @@ namespace SocialMediaWeb.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("confirmPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("userEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

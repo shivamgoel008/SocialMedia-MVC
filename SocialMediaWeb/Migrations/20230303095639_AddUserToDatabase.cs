@@ -20,6 +20,7 @@ namespace SocialMediaWeb.Migrations
                     userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    confirmPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

@@ -12,7 +12,7 @@ using SocialMediaWeb.Data;
 namespace SocialMediaWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230303065353_AddUserToDatabase")]
+    [Migration("20230303095639_AddUserToDatabase")]
     partial class AddUserToDatabase
     {
         /// <inheritdoc />
@@ -35,6 +35,10 @@ namespace SocialMediaWeb.Migrations
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("confirmPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("userEmail")
                         .IsRequired()

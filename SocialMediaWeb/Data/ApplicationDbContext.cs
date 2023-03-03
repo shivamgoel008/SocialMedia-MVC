@@ -13,5 +13,6 @@ namespace SocialMediaWeb.Data
         // categories is the table name
         // get is getter and set is setter
         public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
     }
 }
