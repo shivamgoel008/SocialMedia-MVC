@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaWeb.Data;
 using SocialMediaWeb.Models;
+using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 
 namespace SocialMediaWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;// now we can use this _db to retrive all the categories 
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable < Post > objCatetoryList = _db.Posts.ToList();
+            return View(objCatetoryList);
+            
         }
 
         public IActionResult Privacy()

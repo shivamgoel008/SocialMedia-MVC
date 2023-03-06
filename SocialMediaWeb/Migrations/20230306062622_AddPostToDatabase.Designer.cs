@@ -12,8 +12,8 @@ using SocialMediaWeb.Data;
 namespace SocialMediaWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230303095639_AddUserToDatabase")]
-    partial class AddUserToDatabase
+    [Migration("20230306062622_AddPostToDatabase")]
+    partial class AddPostToDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,30 @@ namespace SocialMediaWeb.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SocialMediaWeb.Models.Post", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTime>("postCreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("postDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("postImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Posts");
+                });
 
             modelBuilder.Entity("SocialMediaWeb.Models.User", b =>
                 {

@@ -1,0 +1,70 @@
+﻿
+
+
+@model Post
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<form asp-action="Index" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="postDescription">Description</label>
+        <input asp-for="postDescription" class="form-control" />
+        <span asp-validation-for="postDescription" class="text-danger"></span>
+    </div>
+
+      <div class="mb-3">
+        <label asp-for="imageFile">Image upload</label>
+        <input asp-for="imageFile" accept="image/*" />
+       <span asp-validation-for="imageFile" class="text-danger"></span>
+</div>
+    <button type="submit" value="Index">Submit</button>
+</form>
+
+
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}
+@*<div>
+    
+
+    <div class="mb-3">
+        <label asp-for="userId">User Id</label>
+        <input asp-for="userId" class="form-control" />
+        <span asp-validation-for="userId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="postImage">Post Image</label>
+        <input type="file" asp-for="postImage" class="form-control" />
+        <span asp-validation-for="postImage" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="postTitle">Title</label>
+        <input asp-for="postTitle" class="form-control" />
+        <span asp-validation-for="postTitle" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="postBio">Post Bio</label>
+        <input asp-for="postBio" class="form-control" />
+        <span asp-validation-for="postBio" class="text-danger"></span>
+    </div>
+
+
+
+
+    <button asp-controller="Post" asp-action="Create" type="submit" class="btn btn-primary" style="width:150px">
+        Create
+    </button>
+
+
+</div>*@

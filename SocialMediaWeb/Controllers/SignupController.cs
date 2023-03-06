@@ -12,25 +12,29 @@ namespace SocialMediaWeb.Controllers
         {
             _db = db;// now we can use this _db to retrive all the categories 
         }
-        public IActionResult SignupPage()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-
-        public IActionResult Create(User obj)
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(User obj)
         {
-            
-            
-            if (ModelState.IsValid && obj.confirmPassword==obj.userPassword)
+            if (ModelState.IsValid && obj.confirmPassword == obj.userPassword)
             {
+                string passwordhash=BCrypt.Net.BCrypt.HashPassword(obj.userPassword);   
+                obj.userPassword= passwordhash;
+                obj.confirmPassword = passwordhash;
                 _db.Users.Add(obj);
-                _db.SaveChanges();    /*at this point data goes to database and saves all the changes  */
-                return RedirectToAction("Index", "Home");        /*once changes are saved we return the view*/
-            } 
-            
-            return RedirectToAction("SignupPage");
+                HttpContext.Session.SetString("userId", obj.Id.ToString());
+                HttpContext.Session.SetString("userName", obj.userName.ToString());
+                HttpContext.Session.SetString("userEmail", obj.userEmail.ToString());
+                _db.SaveChanges();    
+                return RedirectToAction("Index", "Home");       
+            }
+
+            return RedirectToAction("Index");
 
         }
 
