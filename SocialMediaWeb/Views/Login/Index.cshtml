@@ -1,0 +1,24 @@
+﻿
+@model User
+
+<div>
+ 
+
+<form method="post" asp-action="Index">
+    <label asp-for="userEmail">Email</label>
+        <input class="form-control" asp-for="userEmail" type="email" name="userEmail" />
+    <span asp-validation-for="userEmail"></span>
+
+
+    <label asp-for="userPassword">Password</label>
+        <input class="form-control" type="password" asp-for="userPassword" name="userPassword" />
+    <span asp-validation-for="userPassword"></span>
+
+    <button type="submit">Submit</button>
+</form>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

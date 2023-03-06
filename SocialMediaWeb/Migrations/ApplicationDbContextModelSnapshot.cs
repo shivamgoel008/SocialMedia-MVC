@@ -22,6 +22,35 @@ namespace SocialMediaWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("SocialMediaWeb.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("postCreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("postDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("postImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("SocialMediaWeb.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +61,10 @@ namespace SocialMediaWeb.Migrations
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("confirmPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("userEmail")
                         .IsRequired()
@@ -48,6 +81,17 @@ namespace SocialMediaWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SocialMediaWeb.Models.Post", b =>
+                {
+                    b.HasOne("SocialMediaWeb.Models.User", "userId")
+                        .WithMany()
+                        .HasForeignKey("userIdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("userId");
                 });
 #pragma warning restore 612, 618
         }
