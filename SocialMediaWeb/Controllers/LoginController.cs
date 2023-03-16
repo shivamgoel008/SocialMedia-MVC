@@ -17,6 +17,11 @@ namespace SocialMediaWeb.Controllers
         }
         public IActionResult Index()
         {
+            var userId = HttpContext.Session.GetString("userId");
+            if (userId != null )
+            {
+                return RedirectToAction("Index", "Post");
+            }
             return View();
         }
 
@@ -33,15 +38,18 @@ namespace SocialMediaWeb.Controllers
                     HttpContext.Session.SetString("userId", user.ToList()[0].Id.ToString());
                     HttpContext.Session.SetString("userName", user.ToList()[0].userName.ToString());
                     HttpContext.Session.SetString("userEmail", obj.userEmail.ToString());
-                    return RedirectToAction("Index", "Home");
+                    TempData["success"] = "User logged in successfully";
+                    return RedirectToAction("Index", "Post");
                 }
                 else
                 {
-                    return RedirectToAction("index", "login");
+                    TempData["error"] = "Incorrect Password";
+                    return RedirectToAction("index", "Login");
                 }
             }
             else
             {
+                TempData["error"]="User not found";
                 return RedirectToAction("index", "login");
             }
            // }

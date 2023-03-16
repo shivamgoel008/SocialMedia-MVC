@@ -14,6 +14,11 @@ namespace SocialMediaWeb.Controllers
         }
         public IActionResult Index()
         {
+            var userId = HttpContext.Session.GetString("userId");
+            if (userId != null)
+            {
+                return RedirectToAction("Index", "Post");
+            }
             return View();
         }
 
@@ -23,19 +28,19 @@ namespace SocialMediaWeb.Controllers
         {
             if (ModelState.IsValid && obj.confirmPassword == obj.userPassword)
             {
-                string passwordhash=BCrypt.Net.BCrypt.HashPassword(obj.userPassword);   
-                obj.userPassword= passwordhash;
+                TempData["success"] = "User created successfully . Please login to continue";
+                string passwordhash = BCrypt.Net.BCrypt.HashPassword(obj.userPassword);
+                obj.userPassword = passwordhash;
                 obj.confirmPassword = passwordhash;
                 _db.Users.Add(obj);
-                HttpContext.Session.SetString("userId", obj.Id.ToString());
-                HttpContext.Session.SetString("userName", obj.userName.ToString());
-                HttpContext.Session.SetString("userEmail", obj.userEmail.ToString());
-                _db.SaveChanges();    
-                return RedirectToAction("Index", "Home");       
+                _db.SaveChanges();
+               
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index");
-
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
     }

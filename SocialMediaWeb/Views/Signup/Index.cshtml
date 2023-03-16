@@ -2,29 +2,74 @@
 
 @model User
 
+@{
+    ViewData["Title"] = "Signup Page";
+}
 
-<div>
-<form method="post" asp-action="Index">
-    <label asp-for="userEmail">Email</label>
-        <input class="form-control" asp-for="userEmail" type="email" name="userEmail" />
-    <span asp-validation-for="userEmail"></span>
+@section Stylesheets {
+        <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+}
+<partial name="_Toaster"></partial>
+ <div class="login">
+      <div class="loginWrapper">
+        <div class="loginLeft">
+          <h3 class="loginLogo">Socialconnect</h3>
+          <span class="loginDesc">
+            Connect with friends and the world around you on Socialconnect.
+          </span>
+        </div>
+        <form class="loginRight" method="post" asp-action="Index">
+            <div class="loginBox">
+                <div class="loginInput">
+                    <input placeholder="Email"
+                           required
+                           asp-for="userEmail"
+                           type="email"
+                           name="userEmail"
+                           class="loginInputField" />
 
+                </div>
+                <div class="loginInput">
+                    <input placeholder="Password"
+                           required
+                           asp-for="userPassword"
+                           type="password"
+                           name="userPassword"
+                           class="loginInputField"></input>
+                </div>
+                <div class="loginInput">
+                    <input placeholder="Confirm Password"
+                           required
+                           asp-for="confirmPassword"
+                           type="password"
+                           name="confirmPassword"
+                           class="loginInputField"></input>
+                </div>
+                <div class="loginInput">
+                    <input placeholder="Username"
+                           required
+                           asp-for="userName"
+                           name="userName"
+                           type="text"
+                           class="loginInputField"></input>
+                </div>
+                <div class="loginError">
+                    <span class="loginError" asp-validation-for="userEmail">  </span>
+                    <span class="loginError" asp-validation-for="userPassword"></span>
+                    <span class="loginError" asp-validation-for="confirmPassword"></span>
+                    <span class="loginError" asp-validation-for="userName"></span>
+                </div>
+                
+                    <button class="loginButton" type="submit">
+                        Sign up
+                    </button>
+                <a class="loginRegisterButton" asp-controller="Login" asp-action="Index"> Already have an account</a>
+            </div>
+        </form>
+        </div>
 
-    <label asp-for="userPassword">Password</label>
-        <input class="form-control" asp-for="userPassword" type="password" name="userPassword" />
-    <span asp-validation-for="userPassword"></span>
+        </div>
 
-        <label asp-for="confirmPassword">Password</label>
-        <input class="form-control" asp-for="confirmPassword" type="password" name="confirmPassword" />
-        <span asp-validation-for="confirmPassword"></span>
-
-       <label asp-for="userName">UserName</label>
-        <input class="form-control" type="text" name="userName" asp-for="userName" />
-    <span asp-validation-for="userName"></span>
-
-    <button type="submit">Submit</button>
-</form>
-</div>
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial"></partial>

@@ -1,21 +1,54 @@
 ﻿
 @model User
+@{
+    ViewData["Title"] = "Login Page";
+}
 
-<div>
- 
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+    }
+    <partial name="_Toaster"></partial>
+<div class="login">
+    <div class="loginWrapper">
+        <div class="loginLeft">
+            <h3 class="loginLogo">Socialconnect</h3>
+            <span class="loginDesc">
+                Connect with friends and the world around you on Socialconnect.
+            </span>
+        </div>
+        <form class="loginRight" method="post" asp-action="Index">
+            <div class="loginBox loginBox2">
+                <div class="loginInput">
+                    <input placeholder="Email"
+                           required
+                           asp-for="userEmail"
+                           type="email"
+                           name="userEmail"
+                           class="loginInputField" />
 
-<form method="post" asp-action="Index">
-    <label asp-for="userEmail">Email</label>
-        <input class="form-control" asp-for="userEmail" type="email" name="userEmail" />
-    <span asp-validation-for="userEmail"></span>
+                </div>
+                <div class="loginInput">
+                    <input placeholder="Password"
+                           required
+                           asp-for="userPassword"
+                           type="password"
+                           name="userPassword"
+                           class="loginInputField"></input>
+                </div>
+                
+                <div class="loginError">
+                    <span class="loginError" asp-validation-for="userEmail">  </span>
+                    <span class="loginError" asp-validation-for="userPassword"></span>
+                </div>
 
+                <button class="loginButton" type="submit">
+                    Log in
+                </button>
+                <a class="loginRegisterButton" asp-controller="Signup" asp-action="Index"> Create a New Account</a>
+            </div>
+        </form>
+    </div>
 
-    <label asp-for="userPassword">Password</label>
-        <input class="form-control" type="password" asp-for="userPassword" name="userPassword" />
-    <span asp-validation-for="userPassword"></span>
-
-    <button type="submit">Submit</button>
-</form>
 </div>
 @section Scripts{
     @{

@@ -1,24 +1,93 @@
 ﻿
+@using Humanizer;
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
 @model Post
+@{
+    var posts = ViewBag.posts;
+}
+@section Stylesheets {
+    <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+}
+<div>
+      <div class="homeContainer">
+            <div class="sidebar">
+             <div class="sidebarWrapper">
+             <ul class="sidebarList">
+             </ul>
+             </div>
+            </div>
+
+        <div class="feed">
+            <div class="feedWrapper">
+                <form method="post" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label asp-for="postDescription">Description</label>
+                        <textarea required asp-for="postDescription" class="form-control"></textarea>
+                        <span asp-validation-for="postDescription" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="imageFile">Image upload</label>
+                        <input type="file" asp-for="imageFile" class="form-control" />
+                        @*<span asp-validation-for="postDescription" class="text-danger"></span>*@
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+
+                <div style="margin-top:25px">
+                    <h4>Posts</h4>
+                    @if (posts != null)
+                    {
 
 
-<form method="post">
+                        @foreach (Post post in posts)
+                        {
+                            <div class="wrapper">
+                                <div class="card">
+                                    <div class="card-profile">
+                                        <div class="card-profile-info">
+                                            <h3 class="profile-name">@HttpContextAccessor.HttpContext.Session.GetString("userName")</h3>
+                                            <h3 class="date-name">@post.postCreationDate.Humanize()</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-banner">
+                                        <img class="banner-img" src="/Image/@post.postImage" alt=”>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="blog-description">@post.postDescription</p>
 
-    <div class="mb-3">
-        <label asp-for="postDescription">Description</label>
-        <input asp-for="postDescription" class="form-control" />
-        <span asp-validation-for="postDescription" class="text-danger"></span>
-    </div>
+                                    </div>
+                                </div>
 
-      <div class="mb-3">
-        <label asp-for="postImage">Image upload</label>
-        <input type="file"  asp-for="postImage" class="form-control" />
-       @*<span asp-validation-for="postDescription" class="text-danger"></span>*@
-</div>
-    <button type="submit">Submit</button>
-</form>
+                            </div>
+                        }
+
+                    }
+                    else
+                    {
+                        <div>
+                            <div class="noPost">
+                                No posts found
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            </div>
+
+             
+             <div class="rightbarP">
+            <div class="rightbarWrapper">
+             </div>
+               </div>
+      </div></div>
+
+
+
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial"></partial>
